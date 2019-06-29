@@ -20,4 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::post('/register', 'UserController@register');
     Route::post('/login', 'UserController@login');
+    Route::get('/profile', 'UserController@profile');
+    Route::get('/ad', 'AdController@index');
+    Route::post('/ad', 'AdController@store');
+    Route::get('/ad/{ad}', 'AdController@show');
+    //Route::get('/order_items', 'OrderItemController@index');
+    Route::post('/order_items', 'OrderItemController@index');
+    Route::post('/order', 'OrderController@store');
+    Route::get('/order', 'OrderController@index');
+    Route::post('/order_items/delete', 'OrderItemController@destroy');
 });

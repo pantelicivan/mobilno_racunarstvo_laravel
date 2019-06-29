@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\OrderItem;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,4 +17,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $guarded = [];
+
+    public function order_items() {
+        return $this->hasMany(OrderItem::class);
+    }
 }

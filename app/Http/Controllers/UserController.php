@@ -46,7 +46,7 @@ class UserController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => "Log in successful!",
-                "user" => json_encode($user)
+                "user" => $user
             ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
         } else {
             return response()->json([
@@ -55,5 +55,17 @@ class UserController extends Controller
                 "user" => null
             ], 400)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
         }
+    }
+
+    public function profile(Request $request)
+    {
+        $user_id = 1; //Auth::user()->id
+
+        $user = User::whereId($user_id)->first();
+
+        return response()->json([
+            "status" => true,
+            "user" => $user
+        ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 }
