@@ -31,6 +31,12 @@ class CreateForeignKeys extends Migration
             $table->foreign('user_posted')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_refered')->references('id')->on('users')->onDelete('cascade');
         });
+
+        Schema::table('sms_notifications', function (Blueprint $table) {
+            $table->foreign('user_to_notify')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_that_ordered')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_item_id')->references('id')->on('order_items')->onDelete('cascade');
+        });
     }
 
     /**
