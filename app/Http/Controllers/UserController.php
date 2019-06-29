@@ -69,7 +69,7 @@ class UserController extends Controller
 
     public function profile(Request $request)
     {
-        $user_id = 1; //Auth::user()->id
+        $user_id = Auth::user()->id;
 
         $user = User::whereId($user_id)->first();
 
