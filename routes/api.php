@@ -13,20 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('v1')->group(function () {
     Route::post('/register', 'UserController@register');
     Route::post('/login', 'UserController@login');
-    Route::get('/profile', 'UserController@profile');
-    Route::get('/ad', 'AdController@index');
-    Route::post('/ad', 'AdController@store');
-    Route::get('/ad/{ad}', 'AdController@show');
-    //Route::get('/order_items', 'OrderItemController@index');
-    Route::post('/order_items', 'OrderItemController@index');
-    Route::post('/order', 'OrderController@store');
-    Route::get('/order', 'OrderController@index');
-    Route::post('/order_items/delete', 'OrderItemController@destroy');
+    
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('/profile', 'UserController@profile');
+
+        Route::get('/ad', 'AdController@index');
+        Route::post('/ad', 'AdController@store');
+        Route::get('/ad/{ad}', 'AdController@show');
+        
+        Route::post('/order', 'OrderController@store');
+        Route::get('/order', 'OrderController@index');
+
+        Route::get('/temp_order_items', 'TempOrderItemController@index');
+        Route::post('/temp_order_items', 'TempOrderItemController@store');
+        Route::post('/temp_order_items/delete', 'TempOrderItemController@destroy');
+    });
 });

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\TokenTrait;
 
 class UserController extends Controller
 {
+    use TokenTrait;
+
     public function register(Request $request)
     {
         $validator = \Validator::make($request->all(),
@@ -43,11 +46,16 @@ class UserController extends Controller
         $user = User::where('email', $request['email'])->where('password', $request['password'])->first();
 
         if($user) {
+            $passportToken = $this->createPassportTokenByUser($user, env('OAUTH_CLIENT_ID'));
+            $bearerToken = $this->sendBearerTokenResponse($passportToken['access_token'], $passportToken['refresh_token']);
+            $bearerToken = json_decode($bearerToken->getBody()->__toString(), true);
+
             return response()->json([
                 "status" => true,
                 "message" => "Log in successful!",
-                "user" => $user
+                $bearerToken
             ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
+
         } else {
             return response()->json([
                 "status" => false,

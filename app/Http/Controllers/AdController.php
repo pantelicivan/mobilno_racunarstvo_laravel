@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Ad;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,10 @@ class AdController extends Controller
             return response()->json($validator->errors(), 422)->header('Access-Control-Allow-Origin','*');
         }
 
-        Ad::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+
+        Ad::create($data);
 
 
         return response()->json([
