@@ -50,7 +50,7 @@ class AdController extends Controller
 
         return response()->json([
             "status" => true,
-            "message" => 'Your add has been successfully created.'
+            "message" => 'Your ad has been successfully created.'
         ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 
@@ -73,39 +73,5 @@ class AdController extends Controller
         //         "message" => "The ad could not be found."
         //     ], 400)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
         // }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ad  $ad
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ad $ad)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ad  $ad
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ad $ad)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Ad  $ad
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ad $ad)
-    {
-        //
     }
 }
