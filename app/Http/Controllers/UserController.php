@@ -9,6 +9,18 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
+        $validator = \Validator::make($request->all(),
+        [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'mobile_phone' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422)->header('Access-Control-Allow-Origin','*');
+        }
+
         User::create($request->all());
         return response()->json([
             "status" => true,
@@ -17,6 +29,17 @@ class UserController extends Controller
     }
 
     public function login(Request $request) {
+
+        $validator = \Validator::make($request->all(),
+        [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422)->header('Access-Control-Allow-Origin','*');
+        }
+
         $user = User::where('email', $request['email'])->where('password', $request['password'])->first();
 
         if($user) {
