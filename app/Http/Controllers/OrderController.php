@@ -113,6 +113,8 @@ class OrderController extends Controller
                     'body' => $message,
                 )
             );
+
+            $notification->delete();
         }
     }
 }
