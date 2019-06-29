@@ -85,7 +85,7 @@ class UserController extends Controller
 
         return response()->json([
             "status" => true,
-            "user" => 'Log out successful'
+            "message" => 'Log out successful!'
         ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 }
