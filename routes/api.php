@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
     
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/profile', 'UserController@profile');
+        Route::post('/logout', 'UserController@logout');
 
         Route::get('/ad', 'AdController@index');
         Route::post('/ad', 'AdController@store');

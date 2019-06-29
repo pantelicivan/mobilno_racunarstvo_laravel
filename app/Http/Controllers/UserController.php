@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\TokenTrait;
+use App\Token;
 
 class UserController extends Controller
 {
@@ -74,6 +76,16 @@ class UserController extends Controller
         return response()->json([
             "status" => true,
             "user" => $user
+        ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
+    }
+
+    public function logout(Request $request)
+    {
+        Token::where('user_id', Auth::user()->id)->delete();
+
+        return response()->json([
+            "status" => true,
+            "user" => 'Log out successful'
         ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 }
