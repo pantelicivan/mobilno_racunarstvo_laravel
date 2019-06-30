@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
 use App\User;
 use App\TokenTrait;
 use App\Token;
@@ -26,7 +27,11 @@ class UserController extends Controller
             return response()->json($validator->errors(), 422)->header('Access-Control-Allow-Origin','*');
         }
 
-        User::create($request->all());
+        $input = $request->all();
+
+        $input['password'] = bcrypt($input['password']);
+
+        User::create($input);
         return response()->json([
             "status" => true,
             "message" => "Registration successful."
@@ -45,7 +50,11 @@ class UserController extends Controller
             return response()->json($validator->errors(), 422)->header('Access-Control-Allow-Origin','*');
         }
 
-        $user = User::where('email', $request['email'])->where('password', $request['password'])->first();
+        $user = User::where('email', $request['email'])->first();
+
+        if(!Hash::check($request['password'], $user->password)) {
+            $user = null;
+        }
 
         if($user) {
             $passportToken = $this->createPassportTokenByUser($user, env('OAUTH_CLIENT_ID'));
