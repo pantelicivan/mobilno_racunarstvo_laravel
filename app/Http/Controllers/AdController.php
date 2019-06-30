@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Ad;
+use App\Http\Resources\AdsCollection;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -15,10 +16,10 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::all();
+        $ads = Ad::get();
         return response()->json([
             "status" => true,
-            "ads" => $ads
+            "ads" => AdsCollection::collection($ads)
         ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 
