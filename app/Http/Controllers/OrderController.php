@@ -84,7 +84,7 @@ class OrderController extends Controller
 
         return response()->json([
             "status" => true,
-            "message" => OrderCollection::collection($orders)
+            "orders" => OrderCollection::collection($orders)
         ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 
