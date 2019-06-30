@@ -34,7 +34,7 @@ class AdController extends Controller
         [
             'title' => 'required',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric',
             'quantity' => 'required|numeric',
         ]);
 
