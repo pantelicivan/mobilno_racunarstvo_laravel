@@ -61,18 +61,12 @@ class AdController extends Controller
      * @param  \App\Ad  $ad
      * @return \Illuminate\Http\Response
      */
-    public function show(Ad $ad)
+    public function show($id)
     {
-        //if($ad) {
-            return response()->json([
-                "status" => true,
-                "message" => $ad
-            ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
-        // } else {
-        //     return response()->json([
-        //         "status" => false,
-        //         "message" => "The ad could not be found."
-        //     ], 400)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
-        // }
+        $ad = Ad::whereId($id)->get();
+        return response()->json([
+            "status" => true,
+            "ad" => AdsCollection::collection($ad)
+        ], 200)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
     }
 }
